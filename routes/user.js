@@ -9,7 +9,7 @@ const commaFunc = require("../utils/comma");
 
 router.get("/dashboard", ensureAuthenticated, (req,res) => {
     try{
-        return res.render("dashboard", {pageTitle: "Dashbaord", req, commaFunc});
+        return res.render("dashboard", {layout: "layout2", pageTitle: "Dashbaord", req, commaFunc});
     }catch(err){
         return res.redirect("/");
     }
@@ -17,7 +17,7 @@ router.get("/dashboard", ensureAuthenticated, (req,res) => {
 
 router.get("/profile", ensureAuthenticated, (req,res) => {
     try{
-        return res.render("profile", {pageTitle: "Profile", req});
+        return res.render("profile", {layout: "layout2", pageTitle: "Profile", req});
     }catch(err){
         return res.redirect("/");
     }
@@ -25,7 +25,7 @@ router.get("/profile", ensureAuthenticated, (req,res) => {
 
 router.get("/verify", ensureAuthenticated, (req,res) => {
     try{
-        return res.render("verify", {pageTitle: "Verify", req});
+        return res.render("verify", {layout: "layout2", pageTitle: "Verify", req});
     }catch(err){
         return res.redirect("/");
     }
@@ -56,7 +56,7 @@ router.post("/verify", ensureAuthenticated, async(req,res) => {
 
 router.get("/notification", ensureAuthenticated, (req,res) => {
     try{
-        return res.render("notifications", {pageTitle: "Notification", req});
+        return res.render("notifications", {layout: "layout2", pageTitle: "Notification", req});
     }catch(err){
         return res.redirect("/");
     }
@@ -64,7 +64,7 @@ router.get("/notification", ensureAuthenticated, (req,res) => {
 
 router.get("/deposit", ensureAuthenticated, (req,res) => {
     try{
-        return res.render("deposit", {pageTitle: "Deposit Funds", req});
+        return res.render("deposit", {layout: "layout2", pageTitle: "Deposit Funds", req});
     }catch(err){
         return res.redirect("/");
     }
@@ -83,7 +83,7 @@ router.post("/deposit", ensureAuthenticated, (req,res) => {
         const filename = uuid.v4();
 
         if (!req.files || Object.keys(req.files).length === 0) {
-            return res.render("signup", {...req.body,error_msg:"Please upload a passport photograph", pageTitle: "Signup"});
+            return res.render("signup", {...req.body,error_msg:"Please upload a passport photograph", layout: "layout2", pageTitle: "Signup"});
         }
 
         // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
@@ -122,7 +122,7 @@ router.post("/deposit", ensureAuthenticated, (req,res) => {
 
 router.get("/withdraw", ensureAuthenticated, (req,res) => {
     try{
-        return res.render("withdraw", {pageTitle: "Withdraw Funds", req});
+        return res.render("withdraw", {layout: "layout2", pageTitle: "Withdraw Funds", req});
     }catch(err){
         return res.redirect("/");
     }
@@ -173,7 +173,7 @@ router.post("/withdraw", ensureAuthenticated, async (req,res) => {
 router.get("/transacts", ensureAuthenticated, async (req,res) => {
     try{
         const history = await History.find({userID: req.user.id});
-        return res.render("history", {pageTitle: "Transactions", history, req});
+        return res.render("history", {layout: "layout2", pageTitle: "Transactions", history, req});
     }catch(err){
         return res.redirect("/");
     }
@@ -182,7 +182,7 @@ router.get("/transacts", ensureAuthenticated, async (req,res) => {
 router.get("/pending_withdraw", ensureAuthenticated, async (req,res) => {
     try{
         const history = await History.find({userID: req.user.id, type:"withdraw"});
-        return res.render("pendingWithdrawals", {pageTitle: "Pending Withdraw", history, req});
+        return res.render("pendingWithdrawals", {layout: "layout2", pageTitle: "Pending Withdraw", history, req});
     }catch(err){
         return res.redirect("/");
     }
@@ -191,7 +191,7 @@ router.get("/pending_withdraw", ensureAuthenticated, async (req,res) => {
 router.get("/pending_deposit", ensureAuthenticated, async (req,res) => {
     try{
         const history = await History.find({userID: req.user.id, type:"deposit"});
-        return res.render("pendingDeposit", {pageTitle: "Pending Deposit", history, req});
+        return res.render("pendingDeposit", {layout: "layout2", pageTitle: "Pending Deposit", history, req});
     }catch(err){
         return res.redirect("/");
     }
@@ -199,7 +199,7 @@ router.get("/pending_deposit", ensureAuthenticated, async (req,res) => {
 
 router.get("/settings", ensureAuthenticated, (req,res) => {
     try{
-        return res.render("settings", {pageTitle: "Account Settings", req});
+        return res.render("settings", {layout: "layout2", pageTitle: "Account Settings", req});
     }catch(err){
         return res.redirect("/");
     }
